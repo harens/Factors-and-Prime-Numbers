@@ -71,12 +71,12 @@ def smaller_hcf(x, y):
     return math.gcd(x, y)
 
 def perfect_number(limit):
-    total_number = 0
+    perfect_list = []
     for perfect_counter in range(6, limit + 1): # 6 is the first perfect number
         perfect_sum = sum(factors(perfect_counter)) - perfect_counter
         if perfect_sum == perfect_counter:
-            total_number += 1
-    return total_number
+            perfect_list.append(perfect_counter)
+    return perfect_list
 
 def smaller_prime_generator(num1=1, num2=1000):
     return ([number for number in sympy.primerange(num1, num2 + 1)]) # Acts as a generator
@@ -84,4 +84,4 @@ def smaller_prime_generator(num1=1, num2=1000):
 def smaller_prime_factors(num):
     return factorint(num, multiple=True) # Outputs as list rather than dictionary
 
-print(perfect_number(496))
+print(perfect_number(10000))
