@@ -21,6 +21,8 @@ import sympy  # Used for `small` functions
 import math  # Used for `small` functions
 import time  # Times factors function
 
+from sympy import factorint # Used for prime factors
+
 
 def is_prime(num):
     if num > 1:
@@ -31,7 +33,7 @@ def is_prime(num):
     return False  # False for anything below 2
 
 
-def even_smaller_prime(num):
+def smaller_prime(num):
     return sympy.isprime(num)
 
 
@@ -64,5 +66,22 @@ def hcf(x, y):
             return factor_counter
         factor_counter -= 1  # Decreases until it can divide both x and y
 
-def even_smaller_hcf(x, y):
+
+def smaller_hcf(x, y):
     return math.gcd(x, y)
+
+def perfect_number(limit):
+    total_number = 0
+    for perfect_counter in range(6, limit + 1): # 6 is the first perfect number
+        perfect_sum = sum(factors(perfect_counter)) - perfect_counter
+        if perfect_sum == perfect_counter:
+            total_number += 1
+    return total_number
+
+def smaller_prime_generator(num1=1, num2=1000):
+    return ([number for number in sympy.primerange(num1, num2 + 1)]) # Acts as a generator
+
+def smaller_prime_factors(num):
+    return factorint(num, multiple=True) # Outputs as list rather than dictionary
+
+print(perfect_number(496))
