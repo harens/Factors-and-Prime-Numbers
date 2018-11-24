@@ -21,16 +21,18 @@ import sympy  # Used for `small` functions
 import math  # Used for `small` functions
 import time  # Times factors function
 
-from sympy import factorint # Used for prime factors
+from sympy import factorint  # Used for `small` prime factors
 
 
 def is_prime(num):
-    if num > 1:
+    if (
+        num > 1 or num % 2 == 0 or num % 3 == 0
+    ):  # False for anything below 2 or divisible by 2 or 3
         for prime_counter in range(2, (num // 2) + 1):
             if num % prime_counter == 0:  # Checks if output is a float
                 return False
         return True
-    return False  # False for anything below 2
+    return False
 
 
 def smaller_prime(num):
@@ -40,8 +42,9 @@ def smaller_prime(num):
 def factors(num):
     factor_list = []
     if num < 2:  # For 1 and 0
-        factor_list.append(num)
-        return factor_list
+        return [num]
+    elif is_prime(num) == True:
+        return [1, num]
     list_position = 0  # Position in list to insert
     for list_counter in range(1, num // 2):
         if (
@@ -70,18 +73,78 @@ def hcf(x, y):
 def smaller_hcf(x, y):
     return math.gcd(x, y)
 
+
 def perfect_number(limit):
     perfect_list = []
-    for perfect_counter in range(6, limit + 1): # 6 is the first perfect number
+    for perfect_counter in range(6, limit + 1):  # 6 is the first perfect number
         perfect_sum = sum(factors(perfect_counter)) - perfect_counter
         if perfect_sum == perfect_counter:
             perfect_list.append(perfect_counter)
     return perfect_list
 
+
+def prime_generator(num1=1, num2=1000):
+    prime_list = []
+    for prime_counter in range(num1, num2):  # Less than but not equal to number
+        if is_prime(prime_counter) == True:
+            prime_list.append(prime_counter)
+    return prime_list
+
+
 def smaller_prime_generator(num1=1, num2=1000):
-    return ([number for number in sympy.primerange(num1, num2 + 1)]) # Acts as a generator
+    return [number for number in sympy.primerange(num1, num2)]  # Acts as a generator
+
+
+def prime_factors(num):
+    if is_prime(num) == True:
+        return [num]
+    divide_number = 2
+    factor_list = []
+    while num != 1:
+        if num % divide_number == 0:
+            num /= divide_number
+            factor_list.append(divide_number)
+        else:
+            divide_number += 1
+            while is_prime(divide_number) == False:
+                divide_number += 1
+    return factor_list
+
 
 def smaller_prime_factors(num):
-    return factorint(num, multiple=True) # Outputs as list rather than dictionary
+    return factorint(num, multiple=True)  # Outputs as list rather than dictionary
 
-print(perfect_number(10000))
+
+# PYTESTS
+
+
+class CHECK_FUNCTIONS(object):
+    def is_prime_check(self):
+        assert is_prime(0) is False
+        assert is_prime(9) is False
+        assert is_prime(-1) is False
+
+        assert is_prime(2) is True
+        assert is_prime(29) is True
+        assert is_prime(31) is True
+
+    def smaller_prime_check(self):
+        assert smaller_prime(0) is False
+        assert smaller_prime(9) is False
+        assert smaller_prime(-1) is False
+
+        assert smaller_prime(2) is True
+        assert smaller_prime(29) is True
+        assert smaller_prime(31) is True
+
+    def factors_check(self):
+        assert factors(1) == [1]
+        assert factors(12) == [1, 2, 3, 4, 6, 12]
+
+    def hcf_check(self):
+        assert hcf(12, 4) == 4
+        assert hcf(13, 2) == 1
+
+    def smaller_hcf_check(self):
+        assert smaller_hcf(12, 4) == 4
+        assert smaller_hcf(13, 2) == 1
