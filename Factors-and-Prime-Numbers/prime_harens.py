@@ -25,8 +25,10 @@ from sympy import factorint  # Used for `small` prime factors
 
 
 def is_prime(num):
-    if (
-        num > 1 or num % 2 == 0 or num % 3 == 0
+    if num == 2 or num == 3:
+        return True
+    elif (
+        num > 1 and num % 2 != 0 and num % 3 != 0
     ):  # False for anything below 2 or divisible by 2 or 3
         for prime_counter in range(2, (num // 2) + 1):
             if num % prime_counter == 0:  # Checks if output is a float
@@ -114,6 +116,8 @@ def prime_factors(num):
 def smaller_prime_factors(num):
     return factorint(num, multiple=True)  # Outputs as list rather than dictionary
 
+
+print(is_prime(0))
 
 # PYTESTS
 

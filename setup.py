@@ -27,7 +27,7 @@ with open("LICENSE") as f:
 
 setup(
     name="Factors-and-Prime-Numbers",
-    version="0.1",
+    version="0.1.1",
     install_requires=["sympy", "math", "time"],
     description="Number Theory Functions",
     long_description=long_description,
