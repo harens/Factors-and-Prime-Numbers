@@ -43,7 +43,7 @@ def factors(num):
     factor_list = []
     if num < 2:  # For 1 and 0
         return [num]
-    elif is_prime(num) == True:
+    elif is_prime(num) is True:
         return [1, num]
     list_position = 0  # Position in list to insert
     for list_counter in range(1, num // 2):
@@ -86,7 +86,7 @@ def perfect_number(limit):
 def prime_generator(num1=1, num2=1000):
     prime_list = []
     for prime_counter in range(num1, num2):  # Less than but not equal to number
-        if is_prime(prime_counter) == True:
+        if is_prime(prime_counter) is True:
             prime_list.append(prime_counter)
     return prime_list
 
@@ -96,7 +96,7 @@ def smaller_prime_generator(num1=1, num2=1000):
 
 
 def prime_factors(num):
-    if is_prime(num) == True:
+    if is_prime(num) is True:
         return [num]
     divide_number = 2
     factor_list = []
@@ -106,7 +106,7 @@ def prime_factors(num):
             factor_list.append(divide_number)
         else:
             divide_number += 1
-            while is_prime(divide_number) == False:
+            while is_prime(divide_number) is False:
                 divide_number += 1
     return factor_list
 
